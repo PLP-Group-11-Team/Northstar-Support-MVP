@@ -1,5 +1,4 @@
-# Northstar-Support-MVP
-AI-powered Support Deflection MVP for Order Status and Returns &amp; Refunds.
+
 # Northstar Retail Support Deflection MVP
 
 A 5-day industry-style MVP for reducing repetitive customer-support requests for **Northstar Retail Co.**, a simulated e-commerce company.
@@ -22,7 +21,7 @@ Customer
    ↓
 Frontend / Chatbot
    ↓
-n8n / Automation
+Automation
    ↓
 AI Intent Classification
    ↓
@@ -77,7 +76,7 @@ These should be handled through the system's unknown/unsupported or escalation b
 | Component                   | Responsibility                                                                                 |
 | --------------------------- | ---------------------------------------------------------------------------------------------- |
 | **Frontend / Chatbot**      | Provides the customer-facing interface and submits customer queries                            |
-| **n8n / Automation**        | Connects the frontend, AI, data, and response components                                       |
+| **Automation**        | Connects the frontend, AI, data, and response components                                       |
 | **AI / Prompt Engineering** | Handles intent classification, response behavior, guardrails, evaluation, and prompt iteration |
 | **Data / Knowledge Base**   | Provides realistic test orders and returns/refund information                                  |
 | **QA / Integration**        | Tests the complete system and identifies integration issues                                    |
@@ -134,8 +133,8 @@ The AI/Prompt Engineering component is responsible for:
 * Analyzing AI failures
 * Improving prompts based on evidence
 * Documenting AI decisions and limitations
-* Defining the AI-to-n8n interface
-* Supporting AI integration with n8n
+* Defining the AI-to-Automation layer interface
+* Supporting AI integration with automation layer
 
 ### AI and Workflow Boundary
 
@@ -285,7 +284,7 @@ Examples:
 feature/ai-requirements
 feature/ai-intent-classifier
 feature/ai-evaluation
-feature/n8n-workflow
+feature/zapier-workflow
 feature/frontend-chat
 feature/test-data
 ```
@@ -348,8 +347,8 @@ Focus on:
 * Edge cases
 * Guardrail testing
 * Prompt improvement
-* AI-to-n8n interface
-* n8n integration
+* AI-to-Automation layer interface
+* Workflow integration
 * End-to-end testing
 * Known limitations
 

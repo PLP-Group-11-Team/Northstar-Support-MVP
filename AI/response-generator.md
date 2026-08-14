@@ -206,7 +206,6 @@ no code fences. This is the literal message shown to the customer.
 ## 4. Known Limitations
 
 - Policy text format (Case 4/5) is currently undefined — depends on the Data team's returns/refund policy summary, which hasn't been provided yet.
-- Data context format (the JSON shape for order/policy data passed in) is a placeholder here, not confirmed with n8n.
 - No handling defined yet for partial data (e.g., order found but status field is empty) — treated as an open gap, not yet tested.
 - This prompt has not yet been run against real inputs — that's the next task.
 

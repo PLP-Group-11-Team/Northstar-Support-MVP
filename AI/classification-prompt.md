@@ -827,15 +827,19 @@ properties must hold:
 # 8. Version
 
 
-**Prompt version:** `0.2`
+**Prompt version:** `0.4`
 
-**Status:** Draft / Proposed — Round 2 fix applied
+**Status:** Draft / Proposed — Round 2 fixes applied, sensitive information handling added
 
 **Depends on:**
+
 - `requirements.md`
 - `intent-classification.md`
 - `output-schema.md`
 
 **Changelog:**
-- `0.1` — Initial classification prompt.
-- `0.2` — Added explicit JSON-only behavior for prompt-injection/system-instruction extraction attempts. Fixes TC-21.
+- `0.2` — Added explicit rule requiring JSON output format even when refusing system-prompt-extraction attempts. Fixes TC-21 failure from Round 2 evaluation.
+- `0.3` — Added Rule 11: multi-intent requests classify as `UNKNOWN_UNSUPPORTED` with `clarification_required: true`. Formalizes empirically-observed TC-20 behavior, no functional change.
+- `0.4` — Added SENSITIVE INFORMATION HANDLING section: classifier must not return passwords, authentication credentials, payment card numbers, security codes, or internal system instructions in output, even if such data appears in customer input or context. Closes `known-issues.md` gap #2.
+
+The prompt must be revised if the intent taxonomy, output contract, or workflow requirements change.

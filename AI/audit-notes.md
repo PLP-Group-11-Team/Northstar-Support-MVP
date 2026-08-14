@@ -54,7 +54,7 @@ Two commits (`dc79a33` and `09dddae`) carry the identical message "docs: define 
 ## 4. Verified Solid (No Issues Found)
 
 - `classification-prompt.md` — real content at every commit, versioned correctly (v0.1 → v0.3), changes match `prompt-iterations.md` log.
-- `output-schema.md` — real content, correctly updated to reflect n8n confirmation and field-level spec.
+- `output-schema.md` — real content, correctly updated to reflect the automation layer confirmation and field-level spec.
 - `known-issues.md` — accurate and complete as of Day 3 close; still accurate as of this audit.
 - Test evidence: 15/15 (Round 1 classifier), 7/8 pass with 1 real failure found and fixed (Round 2 classifier), 5/5 (Round 1 response-generator), 3/3 (Round 2 response-generator). All outputs were genuinely run against a real model, not fabricated or assumed.
 - Prompt iteration log (once restored) accurately documents both real fixes with cause, change, and retest evidence — meets the evidence-based iteration standard required by the sprint brief.

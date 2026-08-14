@@ -4,7 +4,7 @@
 
 This document defines the behavior and decision boundaries for the AI intent classifier used in the Northstar Retail Support Deflection MVP.
 
-The classifier converts a customer's natural-language support request into a structured representation that can be consumed by the n8n workflow.
+The classifier converts a customer's natural-language support request into a structured representation that can be consumed by the automation workflow.
 
 The classifier is responsible for understanding the customer's request.
 

@@ -11,9 +11,9 @@ Its primary functions are to:
 * Extract relevant information explicitly provided by the customer, such as an order ID.
 * Identify when information required for the next workflow step is missing.
 * Generate customer-facing responses using only factual information supplied by the workflow or approved knowledge source.
-* Produce predictable output that can be consumed by the n8n automation layer.
+* Produce predictable output that can be consumed by the automation layer.
 
-The AI operates as part of the workflow between the customer-facing interface, n8n, and the data/knowledge layer. The exact invocation pattern and integration contract will be finalized with the n8n/Automation team.
+The AI operates as part of the workflow between the customer-facing interface, automation layer, and the data/knowledge layer. The exact invocation pattern and integration contract will be finalized with the Automation team.
 
 The AI is responsible for language understanding and generation. It is **not the source of truth for factual business data or business rules**.
 
@@ -30,7 +30,7 @@ The AI component must support:
 * Detection of missing information required for the next workflow step.
 * Identification of unsupported or ambiguous requests.
 * Natural-language response generation based on information supplied by the workflow/data layer.
-* Structured output suitable for consumption by n8n.
+* Structured output suitable for consumption by automation layer.
 * AI-level guardrails against hallucination, prompt injection, unsupported claims, and scope violations.
 * AI evaluation and prompt iteration.
 
@@ -48,7 +48,7 @@ The AI component is not responsible for:
 * Executing workflow actions.
 * Managing application state.
 * Implementing frontend behavior.
-* Implementing n8n workflow orchestration.
+* Implementing the workflow orchestration.
 * Designing or maintaining the database/data layer.
 * Deployment.
 * Overall system QA.
@@ -160,7 +160,7 @@ The AI/Prompt Engineering component is responsible for:
 * Extracting information explicitly present in customer input.
 * Identifying missing information relevant to the next workflow step.
 * Designing and iterating the response-generation prompt.
-* Defining the AI output requirements in collaboration with the n8n/Automation team.
+* Defining the AI output requirements in collaboration with the Automation team.
 * Designing AI-level guardrails.
 * Defining AI-level failure and escalation signals.
 * Creating and maintaining the AI evaluation dataset.
@@ -188,7 +188,7 @@ The AI must not:
 * Execute transactions or workflow actions.
 * Modify customer or order records.
 * Maintain authoritative application state.
-* Determine how n8n performs routing or data retrieval.
+* Determine how automation layer performs routing or data retrieval.
 * Implement the actual human-escalation mechanism.
 * Treat unsupported requests as supported merely to provide an answer.
 
@@ -216,7 +216,7 @@ Depending on the final workflow design, the AI may also receive:
 * Workflow status or lookup results.
 * Escalation context.
 
-The exact fields, formats, and invocation pattern must be confirmed with the n8n/Automation team before the final interface is implemented.
+The exact fields, formats, and invocation pattern must be confirmed with the Automation team before the final interface is implemented.
 
 ### 6.3 Data Dependency
 
@@ -233,7 +233,7 @@ These are required to ensure that AI prompts and evaluation cases are based on r
 
 ## 7. AI Output Requirements
 
-The AI output must provide sufficient information for n8n to determine the appropriate next workflow action.
+The AI output must provide sufficient information for automation layer to determine the appropriate next workflow action.
 
 At minimum, the output must allow the workflow to determine:
 
@@ -275,11 +275,11 @@ The following responsibilities establish the initial system boundary:
 | Provide authoritative returns/refund policy information | Data / Policy Source        |
 | Apply deterministic business rules                      | Workflow / Business Rules   |
 | Explain supplied factual information to the customer    | AI                          |
-| Route requests between workflow steps                   | n8n / Workflow              |
-| Perform data lookups                                    | n8n / Data Layer            |
+| Route requests between workflow steps                   | Workflow              |
+| Perform data lookups                                    | Data Layer            |
 | Execute transactions or record changes                  | Workflow / Application      |
 | Signal that human escalation may be required            | AI                          |
-| Execute the human handoff                               | n8n / Human Support Process |
+| Execute the human handoff                               | Human Support Process |
 
 ### Core Principle
 
@@ -350,7 +350,7 @@ If the AI cannot generate a response without making an unsupported factual or bu
 * Signal that the case requires clarification or escalation.
 * Allow the downstream workflow to determine the appropriate action.
 
-The exact human-escalation mechanism remains a dependency to be confirmed with the n8n/Automation and Project/Documentation teams.
+The exact human-escalation mechanism remains a dependency to be confirmed with the Automation and Project/Documentation teams.
 
 ---
 
@@ -401,7 +401,7 @@ These inputs are required to create realistic prompts, response behavior, guardr
 * Guardrail testing.
 * Evaluation dataset.
 
-### 11.2 n8n / Automation Team
+### 11.2 Automation Team
 
 **Required:**
 
@@ -413,7 +413,7 @@ These inputs are required to create realistic prompts, response behavior, guardr
 
 **Why:**
 
-These requirements determine the final AI-to-n8n contract and structured output schema.
+These requirements determine the final AI-to-Automation_layer contract and structured output schema.
 
 **AI work dependent on this:**
 
