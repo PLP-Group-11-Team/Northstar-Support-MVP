@@ -1,11 +1,7 @@
 import { type FormEvent, useState } from 'react'
+import { processCustomerMessage } from './services/supportService'
+import { type ChatMessage } from './types/chat'
 import './App.css'
-
-interface ChatMessage {
-  id: string
-  role: 'user' | 'assistant'
-  text: string
-}
 
 const INITIAL_MESSAGES: ChatMessage[] = [
   {
@@ -19,7 +15,7 @@ function App() {
   const [input, setInput] = useState('')
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES)
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
     const trimmedMessage = input.trim()
@@ -28,18 +24,24 @@ function App() {
       return
     }
 
-    const newMessage: ChatMessage = {
+    const userMessage: ChatMessage = {
       id: crypto.randomUUID(),
       role: 'user',
       text: trimmedMessage,
     }
 
-    setMessages((currentMessages) => [
-      ...currentMessages,
-      newMessage,
-    ])
-
+    setMessages((currentMessages) => [...currentMessages, userMessage])
     setInput('')
+
+    const responseText = await processCustomerMessage(trimmedMessage)
+
+    const assistantMessage: ChatMessage = {
+      id: crypto.randomUUID(),
+      role: 'assistant',
+      text: responseText,
+    }
+
+    setMessages((currentMessages) => [...currentMessages, assistantMessage])
   }
 
   return (
