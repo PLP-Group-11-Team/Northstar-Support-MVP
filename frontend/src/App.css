@@ -137,3 +137,18 @@
   color: #ffffff;
   border-bottom-right-radius: 6px;
 }
+
+.message + .message {
+  margin-top: 16px;
+}
+
+.loading-message {
+  color: #6b7280;
+  font-style: italic;
+}
+
+.chat-form input:disabled,
+.chat-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

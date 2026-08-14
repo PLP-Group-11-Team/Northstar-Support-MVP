@@ -1,67 +1,69 @@
-export interface Order {
-  id: string
-  customerName: string
-  item: string
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
+
+interface SupportRequestResponse {
+  requestId: string
   status: string
-  trackingNumber?: string
-  expectedDelivery: string
-  latestUpdate: string
 }
 
-const MOCK_ORDERS: Record<string, Order> = {
-  NS1001: {
-    id: 'NS1001',
-    customerName: 'Risper Odhiambo',
-    item: 'Wireless Headphones',
-    status: 'Shipped',
-    trackingNumber: 'TRK45821',
-    expectedDelivery: '2026-08-15',
-    latestUpdate: 'Package departed Nairobi sorting facility',
-  },
-  NS1002: {
-    id: 'NS1002',
-    customerName: 'Jasmine Kerubo',
-    item: 'Laptop Backpack',
-    status: 'Processing',
-    expectedDelivery: '2026-08-17',
-    latestUpdate: 'Order received and being prepared for dispatch',
-  },
-  NS1003: {
-    id: 'NS1003',
-    customerName: 'David Wafula',
-    item: 'Running Shoes',
-    status: 'Delivered',
-    trackingNumber: 'TRK67214',
-    expectedDelivery: '2026-08-10',
-    latestUpdate: 'Package delivered successfully',
-  },
+interface SupportResultResponse {
+  requestId: string
+  status: string
+  reply?: string
+  intent?: string
+  escalation?: boolean
+  order?: unknown
+  error?: string
+}
+
+const POLLING_INTERVAL_MS = 1000
+const MAX_POLLING_ATTEMPTS = 30
+
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
 export async function processCustomerMessage(messageText: string): Promise<string> {
-  const match = messageText.match(/NS\d{4}/i)
+  try {
+    const requestRes = await fetch(`${API_BASE_URL}/api/support/request`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message: messageText }),
+    })
 
-  if (match) {
-    const orderId = match[0].toUpperCase()
-    const order = MOCK_ORDERS[orderId]
-
-    if (order) {
-      const trackingText = order.trackingNumber
-        ? ` (Tracking: ${order.trackingNumber})`
-        : ''
-
-      return `Order ${order.id} (${order.item}) for ${order.customerName} is currently ${order.status}${trackingText}. Expected delivery date: ${order.expectedDelivery}. Latest update: "${order.latestUpdate}".`
+    if (!requestRes.ok) {
+      throw new Error(`Request failed with status ${requestRes.status}`)
     }
 
-    return `I couldn't find any order matching "${orderId}". Please check your order number and try again.`
+    const requestData: SupportRequestResponse = await requestRes.json()
+    const { requestId } = requestData
+
+    if (!requestId) {
+      throw new Error('No requestId returned from server.')
+    }
+
+    for (let attempt = 0; attempt < MAX_POLLING_ATTEMPTS; attempt++) {
+      await delay(POLLING_INTERVAL_MS)
+
+      const resultRes = await fetch(`${API_BASE_URL}/api/support/result/${requestId}`)
+
+      if (!resultRes.ok) {
+        throw new Error(`Polling failed with status ${resultRes.status}`)
+      }
+
+      const resultData: SupportResultResponse = await resultRes.json()
+
+      if (resultData.status !== 'pending') {
+        if (resultData.reply) {
+          return resultData.reply
+        }
+        throw new Error('Completed result missing reply field.')
+      }
+    }
+
+    throw new Error('Polling timed out waiting for support response.')
+  } catch {
+    return 'Sorry, I ran into a problem checking your request. Please try again in a moment.'
   }
-
-  const orderKeywords = ['order', 'track', 'tracking', 'package', 'shipment', 'delivery']
-  const lowerMessage = messageText.toLowerCase()
-  const asksAboutOrder = orderKeywords.some((keyword) => lowerMessage.includes(keyword))
-
-  if (asksAboutOrder) {
-    return 'Could you please provide your order ID (for example, NS1001) so I can check the status for you?'
-  }
-
-  return 'Hi! I can help you check an order status. If you are inquiring about an order, please share your order ID (e.g., NS1001).'
 }

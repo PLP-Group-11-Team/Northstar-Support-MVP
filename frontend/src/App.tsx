@@ -14,13 +14,14 @@ const INITIAL_MESSAGES: ChatMessage[] = [
 function App() {
   const [input, setInput] = useState('')
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES)
+  const [isLoading, setIsLoading] = useState(false)
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
     const trimmedMessage = input.trim()
 
-    if (!trimmedMessage) {
+    if (!trimmedMessage || isLoading) {
       return
     }
 
@@ -32,16 +33,21 @@ function App() {
 
     setMessages((currentMessages) => [...currentMessages, userMessage])
     setInput('')
+    setIsLoading(true)
 
-    const responseText = await processCustomerMessage(trimmedMessage)
+    try {
+      const responseText = await processCustomerMessage(trimmedMessage)
 
-    const assistantMessage: ChatMessage = {
-      id: crypto.randomUUID(),
-      role: 'assistant',
-      text: responseText,
+      const assistantMessage: ChatMessage = {
+        id: crypto.randomUUID(),
+        role: 'assistant',
+        text: responseText,
+      }
+
+      setMessages((currentMessages) => [...currentMessages, assistantMessage])
+    } finally {
+      setIsLoading(false)
     }
-
-    setMessages((currentMessages) => [...currentMessages, assistantMessage])
   }
 
   return (
@@ -66,6 +72,12 @@ function App() {
               <p>{message.text}</p>
             </div>
           ))}
+
+          {isLoading && (
+            <div className="message assistant-message loading-message">
+              <p>Thinking...</p>
+            </div>
+          )}
         </section>
 
         <form className="chat-form" onSubmit={handleSubmit}>
@@ -75,9 +87,12 @@ function App() {
             aria-label="Support message"
             value={input}
             onChange={(event) => setInput(event.target.value)}
+            disabled={isLoading}
           />
 
-          <button type="submit">Send</button>
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? 'Sending...' : 'Send'}
+          </button>
         </form>
       </section>
     </main>
