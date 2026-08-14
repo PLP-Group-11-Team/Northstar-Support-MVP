@@ -1,9 +1,23 @@
-import { FormEvent, useState } from 'react'
+import { type FormEvent, useState } from 'react'
 import './App.css'
+
+interface ChatMessage {
+  id: string
+  role: 'user' | 'assistant'
+  text: string
+}
+
+const INITIAL_MESSAGES: ChatMessage[] = [
+  {
+    id: 'welcome-message',
+    role: 'assistant',
+    text: 'Hi! I can help you check an order status or answer questions about returns and refunds.',
+  },
+]
 
 function App() {
   const [input, setInput] = useState('')
-  const [messages, setMessages] = useState<string[]>([])
+  const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES)
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -14,9 +28,15 @@ function App() {
       return
     }
 
+    const newMessage: ChatMessage = {
+      id: crypto.randomUUID(),
+      role: 'user',
+      text: trimmedMessage,
+    }
+
     setMessages((currentMessages) => [
       ...currentMessages,
-      trimmedMessage,
+      newMessage,
     ])
 
     setInput('')
@@ -34,16 +54,14 @@ function App() {
         </header>
 
         <section className="chat-area" aria-live="polite">
-          <div className="message assistant-message">
-            <p>
-              Hi! I can help you check an order status or answer questions about
-              returns and refunds.
-            </p>
-          </div>
-
-          {messages.map((message, index) => (
-            <div className="message user-message" key={index}>
-              <p>{message}</p>
+          {messages.map((message) => (
+            <div
+              className={`message ${
+                message.role === 'user' ? 'user-message' : 'assistant-message'
+              }`}
+              key={message.id}
+            >
+              <p>{message.text}</p>
             </div>
           ))}
         </section>
