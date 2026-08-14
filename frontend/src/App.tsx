@@ -1,6 +1,27 @@
+import { FormEvent, useState } from 'react'
 import './App.css'
 
 function App() {
+  const [input, setInput] = useState('')
+  const [messages, setMessages] = useState<string[]>([])
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const trimmedMessage = input.trim()
+
+    if (!trimmedMessage) {
+      return
+    }
+
+    setMessages((currentMessages) => [
+      ...currentMessages,
+      trimmedMessage,
+    ])
+
+    setInput('')
+  }
+
   return (
     <main className="support-page">
       <section className="support-container">
@@ -19,13 +40,21 @@ function App() {
               returns and refunds.
             </p>
           </div>
+
+          {messages.map((message, index) => (
+            <div className="message user-message" key={index}>
+              <p>{message}</p>
+            </div>
+          ))}
         </section>
 
-        <form className="chat-form">
+        <form className="chat-form" onSubmit={handleSubmit}>
           <input
             type="text"
             placeholder="Type your message..."
             aria-label="Support message"
+            value={input}
+            onChange={(event) => setInput(event.target.value)}
           />
 
           <button type="submit">Send</button>

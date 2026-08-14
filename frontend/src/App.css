@@ -129,3 +129,11 @@
     max-width: 88%;
   }
 }
+
+.user-message {
+  margin-left: auto;
+  margin-top: 16px;
+  background: #2563eb;
+  color: #ffffff;
+  border-bottom-right-radius: 6px;
+}
