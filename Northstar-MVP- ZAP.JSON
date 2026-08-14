@@ -1,0 +1,32 @@
+{
+  "app": "EngineAPI",
+  "type": "run",
+  "action": "series_skip_errors",
+  "id": "series_376412089",
+  "zdl_version": "0.4",
+  "title": "Northstar Retail Support Deflection MVP",
+  "steps": [
+    {
+      "id": "376412089",
+      "app": "WebHookCLIAPI@1.1.1",
+      "type": "read",
+      "action": "hook_raw",
+      "params": {}
+    },
+    {
+      "id": "376412090",
+      "app": "CodeCLIAPI@1.0.1",
+      "type": "write",
+      "action": "01929fad-d3dd-62c2-52ed-7868d5fcc691",
+      "params": {
+        "code": "const message = inputData.customer_message || '';\n\n// Normalize the message for analysis\nconst normalizedMessage = message.toLowerCase().trim();\n\n// Extract order ID if present (pattern: NS followed by digits)\nconst orderIdMatch = message.match(/NS\\d{4,}/);\nconst orderId = orderIdMatch ? orderIdMatch[0] : null;\n\n// Classify intent based on keywords\nlet intent = 'UNKNOWN_UNSUPPORTED';\nlet clarificationRequired = false;\nlet escalationRequired = false;\nlet missingInformation = [];\n\n// Check for ORDER_STATUS keywords\nif (/\\b(order|status|shipping|delivery|tracking|confirmation|where|when|track)\\b/.test(normalizedMessage)) {\n  intent = 'ORDER_STATUS';\n  // Missing order ID for ORDER_STATUS requests\n  if (!orderId) {\n    missingInformation = ['order_id'];\n  }\n}\n// Check for RETURNS_REFUNDS keywords\nelse if (/\\b(return|refund|exchange|send back|money back|cancel|wrong item)\\b/.test(normalizedMessage)) {\n  intent = 'RETURNS_REFUNDS';\n}\n\n// Detect ambiguous requests (multiple conflicting intents)\nconst hasOrderKeywords = /\\b(order|status|shipping|tracking)\\b/.test(normalizedMessage);\nconst hasReturnKeywords = /\\b(return|refund|exchange)\\b/.test(normalizedMessage);\nif (hasOrderKeywords && hasReturnKeywords) {\n  clarificationRequired = true;\n}\n\n// Return the classification result\nreturn {\n  intent: intent,\n  order_id: orderId,\n  missing_information: missingInformation,\n  clarification_required: clarificationRequired,\n  escalation_required: escalationRequired\n};",
+        "input": {
+          "customer_message": "{{376412089__raw_body}}"
+        },
+        "packages_enabled": false
+      }
+    }
+    // ... (rest of your steps)
+  ]
+}
+
