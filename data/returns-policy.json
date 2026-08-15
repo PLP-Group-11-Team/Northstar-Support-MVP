@@ -1,0 +1,112 @@
+[
+  {
+    "policy_id": "RETURN_PERIOD",
+    "category": "Returns",
+    "topic": "Return period",
+    "answer": "Customers can request a return within 30 days of delivery.",
+    "examples": [
+      "How long do I have to return an item?",
+      "Can I return something after 3 weeks?"
+    ]
+  },
+  {
+    "policy_id": "RETURN_CONDITION",
+    "category": "Returns",
+    "topic": "Return condition",
+    "answer": "Items should be unused and in their original condition, with original packaging where applicable.",
+    "examples": [
+      "What condition does an item need to be in for a return?",
+      "Can I return an item I've used?"
+    ]
+  },
+  {
+    "policy_id": "START_RETURN",
+    "category": "Returns",
+    "topic": "How to start a return",
+    "answer": "Provide the order ID and reason for the return through the support system.",
+    "examples": [
+      "How do I start a return?",
+      "I want to return my order. What do I do?"
+    ]
+  },
+  {
+    "policy_id": "RETURN_APPROVAL",
+    "category": "Returns",
+    "topic": "Return approval",
+    "answer": "Northstar reviews the request and provides return instructions if the request is eligible.",
+    "examples": [
+      "How do I know if my return is approved?",
+      "Has my return request been approved?"
+    ]
+  },
+  {
+    "policy_id": "REFUND_TIMING",
+    "category": "Refunds",
+    "topic": "Refund timing",
+    "answer": "After the returned item is received and approved, the refund is initiated within 3-5 business days.",
+    "examples": [
+      "When will I get my refund?",
+      "How long does a refund take?"
+    ]
+  },
+  {
+    "policy_id": "REFUND_ARRIVAL",
+    "category": "Refunds",
+    "topic": "Refund arrival",
+    "answer": "The time for the refund to appear depends on the customer's payment method or provider.",
+    "examples": [
+      "When will the refund show in my account?",
+      "Why haven't I received my refund yet?"
+    ]
+  },
+  {
+    "policy_id": "DAMAGED_ITEM",
+    "category": "Returns",
+    "topic": "Damaged item",
+    "answer": "Report damaged items as soon as possible and provide the order ID and relevant details.",
+    "examples": [
+      "My item arrived damaged. What should I do?",
+      "I received a damaged item."
+    ]
+  },
+  {
+    "policy_id": "WRONG_ITEM",
+    "category": "Returns",
+    "topic": "Wrong item",
+    "answer": "Northstar reviews the order and arranges the appropriate return or replacement process.",
+    "examples": [
+      "I received the wrong item. What should I do?",
+      "You sent me the wrong product."
+    ]
+  },
+  {
+    "policy_id": "NON_RETURNABLE_ITEMS",
+    "category": "Returns",
+    "topic": "Non-returnable items",
+    "answer": "Items marked as non-returnable on the product listing are not eligible for standard returns.",
+    "examples": [
+      "Can I return this item?",
+      "Which items can't be returned?"
+    ]
+  },
+  {
+    "policy_id": "DAMAGED_WRONG_ITEM_SHIPPING",
+    "category": "Returns",
+    "topic": "Return shipping for damaged or wrong item",
+    "answer": "Northstar covers return shipping for damaged or incorrect items.",
+    "examples": [
+      "Do I have to pay to return a damaged item?",
+      "Who pays return shipping for the wrong item?"
+    ]
+  },
+  {
+    "policy_id": "OTHER_RETURN_SHIPPING",
+    "category": "Returns",
+    "topic": "Return shipping for other returns",
+    "answer": "For other eligible returns, the customer may be responsible for return shipping.",
+    "examples": [
+      "Do I have to pay return shipping?",
+      "Who pays for the return?"
+    ]
+  }
+]
