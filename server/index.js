@@ -26,13 +26,14 @@ app.get('/api/health', (req, res) => {
 })
 
 // Support request endpoint
-app.post('/api/support/request', (req, res) => {
+app.post('/api/support/request', async (req, res) => {
   const { message } = req.body
 
   if (!message || typeof message !== 'string' || message.trim() === '') {
     return res.status(400).json({ error: 'Message must be a non-empty string.' })
   }
 
+  const automationWebhookUrl = process.env.AUTOMATION_WEBHOOK_URL
   const requestId = crypto.randomUUID()
 
   // Store initial pending state for the generated requestId
@@ -42,7 +43,32 @@ app.post('/api/support/request', (req, res) => {
     createdAt: new Date().toISOString(),
   })
 
-  // Note: Later, when ZAPIER_CATCH_HOOK_URL is configured, the request will be forwarded to Zapier here.
+  if (!automationWebhookUrl || typeof automationWebhookUrl !== 'string' || automationWebhookUrl.trim() === '') {
+    resultsMap.delete(requestId)
+    return res.status(503).json({ error: 'Automation service unavailable.' })
+  }
+
+  try {
+    const response = await fetch(automationWebhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        requestId,
+        message,
+      }),
+      signal: AbortSignal.timeout(10000),
+    })
+
+    if (!response.ok) {
+      resultsMap.delete(requestId)
+      return res.status(502).json({ error: 'Failed to dispatch request to automation service.' })
+    }
+  } catch {
+    resultsMap.delete(requestId)
+    return res.status(502).json({ error: 'Failed to dispatch request to automation service.' })
+  }
 
   return res.status(202).json({
     requestId,
@@ -50,7 +76,7 @@ app.post('/api/support/request', (req, res) => {
   })
 })
 
-// Support callback endpoint (called by Zapier)
+// Support callback endpoint (called by automation workflow)
 app.post('/api/support/callback', (req, res) => {
   const payload = req.body
 
