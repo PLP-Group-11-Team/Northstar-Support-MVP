@@ -1,0 +1,11 @@
+Order ID,Customer Name,Product,Order Date,Status,Tracking Number,Expected Delivery,Last update
+NS1001,Risper Odhiambo,Wireless Headphones,2026-08-08,Shipped,TRK45821,2026-08-15,Package departed Nairobi sorting facility
+NS1002,Jasmine Kerubo,Laptop Backpack,2026-08-10,Processing,—,2026-08-17,Order received and being prepared for dispatch
+NS1003,David Wafula,Running Shoes,2026-08-05,Delivered,TRK67214,2026-08-10,Package delivered successfully
+NS1004,Nobara Shoko,Smart Watch,2026-08-09,Shipped,TRK83952,2026-08-14,Package arrived at Nairobi distribution center
+NS1005,Alice Konate,Cotton T-Shirt,2026-08-11,Processing,—,2026-08-18,Order is being prepared for dispatch
+NS1006,Alvin Ouma,Phone Case,2026-08-04,Delivered,TRK31567,2026-08-09,Package delivered successfully
+NS1007,Grace Waweru,Bluetooth Speaker,2026-08-07,Shipped,TRK72491,2026-08-13,Package departed Nairobi distribution center
+NS1008,Hassan Ali,Denim Jacket,2026-08-12,Processing,—,2026-08-20,Order received and payment confirmed
+NS1009,Irene Wambui,USB-C Charger,2026-08-03,Delivered,TRK58143,2026-08-07,Package delivered successfully
+NS1010,Brian Onyango,Sports Bag,2026-08-09,Shipped,TRK93628,2026-08-16,Package is in transit to Nairobi distribution center

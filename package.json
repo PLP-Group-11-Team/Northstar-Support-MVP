@@ -1,0 +1,32 @@
+{
+  "name": "northstar-support-mvp",
+  "version": "1.0.0",
+  "description": "A 5-day industry-style MVP for reducing repetitive customer-support requests for **Northstar Retail Co.**, a simulated e-commerce company.",
+  "main": "index.js",
+  "scripts": {
+  "start": "node src/server.js",
+  "test": "node tests/evaluation.js"
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PLP-Group-11-Team/Northstar-Support-MVP.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/PLP-Group-11-Team/Northstar-Support-MVP/issues"
+  },
+  "homepage": "https://github.com/PLP-Group-11-Team/Northstar-Support-MVP#readme",
+  "dependencies": {
+    "@google/genai": "^2.17.1",
+    "ajv": "^8.20.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "openai": "^7.4.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Northstar AI Intent Classification Output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "intent",
+    "order_id",
+    "missing_information",
+    "clarification_required",
+    "escalation_required"
+  ],
+  "properties": {
+    "intent": {
+      "type": "string",
+      "enum": [
+        "ORDER_STATUS",
+        "RETURNS_REFUNDS",
+        "UNKNOWN_UNSUPPORTED"
+      ]
+    },
+    "order_id": {
+      "type": ["string", "null"]
+    },
+    "missing_information": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["order_id"]
+      },
+      "uniqueItems": true
+    },
+    "clarification_required": {
+      "type": "boolean"
+    },
+    "escalation_required": {
+      "type": "boolean"
+    }
+  }
+}
