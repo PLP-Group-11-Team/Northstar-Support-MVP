@@ -15,7 +15,17 @@ app.get("/health", (req, res) => {
     service: "northstar-ai-classifier"
   });
 });
+app.use("/api/classify", (req, res, next) => {
+  const apiKey = req.headers["x-api-key"];
 
+  if (!apiKey || apiKey !== process.env.NORTHSTAR_API_KEY) {
+    return res.status(401).json({
+      error: "Unauthorized"
+    });
+  }
+
+  next();
+});
 app.post("/api/classify", async (req, res) => {
   try {
     const { customer_message } = req.body;
