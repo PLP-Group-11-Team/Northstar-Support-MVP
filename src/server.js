@@ -9,23 +9,27 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
+// API landing endpoint
+app.get("/", (req, res) => {
+  res.json({
+    service: "Northstar Retail Support AI API",
+    status: "running",
+    endpoints: {
+      health: "GET /health",
+      classify: "POST /api/classify"
+    }
+  });
+});
+
+// Health check
 app.get("/health", (req, res) => {
   res.json({
     status: "ok",
     service: "northstar-ai-classifier"
   });
 });
-app.use("/api/classify", (req, res, next) => {
-  const apiKey = req.headers["x-api-key"];
 
-  if (!apiKey || apiKey !== process.env.NORTHSTAR_API_KEY) {
-    return res.status(401).json({
-      error: "Unauthorized"
-    });
-  }
-
-  next();
-});
+// AI classification
 app.post("/api/classify", async (req, res) => {
   try {
     const { customer_message } = req.body;
@@ -42,11 +46,9 @@ app.post("/api/classify", async (req, res) => {
     const result = await classifyIntent(customer_message);
 
     return res.status(200).json(result);
-
   } catch (error) {
     console.error("Classification error:", error);
 
-    // Gemini/API quota or rate-limit error
     if (
       error.statusCode === 429 ||
       error.code === "too_many_requests"
@@ -57,7 +59,6 @@ app.post("/api/classify", async (req, res) => {
       });
     }
 
-    // Other AI/API errors
     return res.status(500).json({
       error: "AI classification failed",
       retryable: false
