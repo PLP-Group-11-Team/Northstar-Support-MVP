@@ -4,8 +4,9 @@
   "description": "A 5-day industry-style MVP for reducing repetitive customer-support requests for **Northstar Retail Co.**, a simulated e-commerce company.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "start": "node src/server.js",
+  "test": "node tests/evaluation.js"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PLP-Group-11-Team/Northstar-Support-MVP.git"
