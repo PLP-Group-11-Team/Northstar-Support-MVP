@@ -6,6 +6,7 @@
   "required": [
     "intent",
     "order_id",
+    "policy_topic",
     "missing_information",
     "clarification_required",
     "escalation_required"
@@ -21,6 +22,23 @@
     },
     "order_id": {
       "type": ["string", "null"]
+    },
+    "policy_topic": {
+      "type": ["string", "null"],
+      "enum": [
+        "RETURN_PERIOD",
+        "RETURN_CONDITION",
+        "START_RETURN",
+        "RETURN_APPROVAL",
+        "REFUND_TIMING",
+        "REFUND_ARRIVAL",
+        "DAMAGED_ITEM",
+        "WRONG_ITEM",
+        "NON_RETURNABLE_ITEMS",
+        "DAMAGED_WRONG_ITEM_SHIPPING",
+        "OTHER_RETURN_SHIPPING",
+        null
+      ]
     },
     "missing_information": {
       "type": "array",
