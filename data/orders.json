@@ -1,0 +1,102 @@
+[
+  {
+    "order_id": "NS1001",
+    "customer_name": "Risper Odhiambo",
+    "product": "Wireless Headphones",
+    "order_date": "2026-08-08",
+    "status": "Shipped",
+    "tracking_number": "TRK45821",
+    "expected_delivery": "2026-08-15",
+    "last_update": "Package departed Nairobi sorting facility"
+  },
+  {
+    "order_id": "NS1002",
+    "customer_name": "Jasmine Kerubo",
+    "product": "Laptop Backpack",
+    "order_date": "2026-08-10",
+    "status": "Processing",
+    "tracking_number": null,
+    "expected_delivery": "2026-08-17",
+    "last_update": "Order received and being prepared for dispatch"
+  },
+  {
+    "order_id": "NS1003",
+    "customer_name": "David Wafula",
+    "product": "Running Shoes",
+    "order_date": "2026-08-05",
+    "status": "Delivered",
+    "tracking_number": "TRK67214",
+    "expected_delivery": "2026-08-10",
+    "last_update": "Package delivered successfully"
+  },
+  {
+    "order_id": "NS1004",
+    "customer_name": "Nobara Shoko",
+    "product": "Smart Watch",
+    "order_date": "2026-08-09",
+    "status": "Shipped",
+    "tracking_number": "TRK83952",
+    "expected_delivery": "2026-08-14",
+    "last_update": "Package arrived at Nairobi distribution center"
+  },
+  {
+    "order_id": "NS1005",
+    "customer_name": "Alice Konate",
+    "product": "Cotton T-Shirt",
+    "order_date": "2026-08-11",
+    "status": "Processing",
+    "tracking_number": null,
+    "expected_delivery": "2026-08-18",
+    "last_update": "Order is being prepared for dispatch"
+  },
+  {
+    "order_id": "NS1006",
+    "customer_name": "Alvin Ouma",
+    "product": "Phone Case",
+    "order_date": "2026-08-04",
+    "status": "Delivered",
+    "tracking_number": "TRK31567",
+    "expected_delivery": "2026-08-09",
+    "last_update": "Package delivered successfully"
+  },
+  {
+    "order_id": "NS1007",
+    "customer_name": "Grace Waweru",
+    "product": "Bluetooth Speaker",
+    "order_date": "2026-08-07",
+    "status": "Shipped",
+    "tracking_number": "TRK72491",
+    "expected_delivery": "2026-08-13",
+    "last_update": "Package departed Nairobi distribution center"
+  },
+  {
+    "order_id": "NS1008",
+    "customer_name": "Hassan Ali",
+    "product": "Denim Jacket",
+    "order_date": "2026-08-12",
+    "status": "Processing",
+    "tracking_number": null,
+    "expected_delivery": "2026-08-20",
+    "last_update": "Order received and payment confirmed"
+  },
+  {
+    "order_id": "NS1009",
+    "customer_name": "Irene Wambui",
+    "product": "USB-C Charger",
+    "order_date": "2026-08-03",
+    "status": "Delivered",
+    "tracking_number": "TRK58143",
+    "expected_delivery": "2026-08-07",
+    "last_update": "Package delivered successfully"
+  },
+  {
+    "order_id": "NS1010",
+    "customer_name": "Brian Onyango",
+    "product": "Sports Bag",
+    "order_date": "2026-08-09",
+    "status": "Shipped",
+    "tracking_number": "TRK93628",
+    "expected_delivery": "2026-08-16",
+    "last_update": "Package is in transit to Nairobi distribution center"
+  }
+]
