@@ -1,68 +1,63 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000'
+const WEBHOOK_URL =
+  'https://adeshissack27.app.n8n.cloud/webhook/Northstar-support'
 
-interface SupportRequestResponse {
-  requestId: string
-  status: string
+function detectType(messageText: string): 'order' | 'return' {
+  const message = messageText.toLowerCase()
+
+  if (
+    message.includes('return') ||
+    message.includes('refund') ||
+    message.includes('damaged') ||
+    message.includes('wrong item') ||
+    message.includes('exchange')
+  ) {
+    return 'return'
+  }
+
+  return 'order'
 }
 
-interface SupportResultResponse {
-  requestId: string
-  status: string
-  reply?: string
-  intent?: string
-  escalation?: boolean
-  order?: unknown
-  error?: string
+function extractOrderId(messageText: string): string | null {
+  const match = messageText.toUpperCase().match(/NS\d{4,}/)
+  return match ? match[0] : null
 }
 
-const POLLING_INTERVAL_MS = 1000
-const MAX_POLLING_ATTEMPTS = 30
-
-function delay(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
-
-export async function processCustomerMessage(messageText: string): Promise<string> {
+export async function processCustomerMessage(
+  messageText: string,
+): Promise<string> {
   try {
-    const requestRes = await fetch(`${API_BASE_URL}/api/support/request`, {
+    const type = detectType(messageText)
+
+    const payload =
+      type === 'order'
+        ? {
+            type: 'order',
+            orderId: extractOrderId(messageText),
+          }
+        : {
+            type: 'return',
+            message: messageText,
+          }
+
+    const response = await fetch(WEBHOOK_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ message: messageText }),
+      body: JSON.stringify(payload),
     })
 
-    if (!requestRes.ok) {
-      throw new Error(`Request failed with status ${requestRes.status}`)
+    if (!response.ok) {
+      throw new Error(`Request failed with status ${response.status}`)
     }
 
-    const requestData: SupportRequestResponse = await requestRes.json()
-    const { requestId } = requestData
+    const data = await response.json()
 
-    if (!requestId) {
-      throw new Error('No requestId returned from server.')
+    if (data.message) {
+      return data.message
     }
 
-    for (let attempt = 0; attempt < MAX_POLLING_ATTEMPTS; attempt++) {
-      await delay(POLLING_INTERVAL_MS)
-
-      const resultRes = await fetch(`${API_BASE_URL}/api/support/result/${requestId}`)
-
-      if (!resultRes.ok) {
-        throw new Error(`Polling failed with status ${resultRes.status}`)
-      }
-
-      const resultData: SupportResultResponse = await resultRes.json()
-
-      if (resultData.status !== 'pending') {
-        if (resultData.reply) {
-          return resultData.reply
-        }
-        throw new Error('Completed result missing reply field.')
-      }
-    }
-
-    throw new Error('Polling timed out waiting for support response.')
+    return 'Sorry, I could not find an answer for that request.'
   } catch {
     return 'Sorry, I ran into a problem checking your request. Please try again in a moment.'
   }
