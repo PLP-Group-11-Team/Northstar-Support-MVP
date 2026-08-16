@@ -284,7 +284,7 @@ Examples:
 feature/ai-requirements
 feature/ai-intent-classifier
 feature/ai-evaluation
-feature/zapier-workflow
+feature/n8n-workflow
 feature/frontend-chat
 feature/test-data
 ```
